@@ -1,6 +1,6 @@
 package POI;
 
-import POI.ORM.NewPerson;
+import POI.datamodel.Person;
 import POI.ORM.NewSheet;
 import POI.ORM.NewXlsx;
 import POI.ORM.Xlsx;
@@ -47,9 +47,9 @@ public class ExcelOperationTest {
 
         //Our new ORM Version
         NewXlsx xlsx = Xlsx.load(excelFilePath);
-        NewSheet<NewPerson> personSheet = xlsx.getSheet(NewPerson.class);
-        List<NewPerson> people = personSheet.getAll();
-        for(NewPerson person : people) {
+        NewSheet<Person> personSheet = xlsx.getSheet(Person.class);
+        List<Person> people = personSheet.getAll();
+        for(Person person : people) {
             System.out.println("name:" + person.name() + " age:" + person.age() + " gender:" + person.gender());
         }
     }
