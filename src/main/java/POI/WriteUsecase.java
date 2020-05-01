@@ -38,6 +38,7 @@ public class WriteUsecase {
         NewSheet<Person> contactSheet = xlsx.createSheet(Person.class);
         Person John = new Person("John", 22, false);
         Person Lina = new Person("Lina", 26, true);
-        contactSheet.add(John, Lina);
+        contactSheet.add(John);
+        contactSheet.add(Lina);
     }
 }

@@ -9,10 +9,9 @@ public class Person {
     private String name;
     @Column
     private int age;
+    Object extra;
     @Column
     private boolean gender;
-
-    Object extra;
 
     public Person(final String name, final int age, final boolean gender) {
         this.name = name;
