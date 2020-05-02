@@ -6,6 +6,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +16,22 @@ class RowMapper<E> {
     private String sheetName;
     List<CellMapper> cellMappers;
     RowMapper(Class<E> cls) {
+        //precondition check
         if(null == cls) {
-            throw new IllegalArgumentException("cls can't be null.");
+            throw new IllegalArgumentException("Parameter can't be null.");
+        }
+        try {
+            cls.getConstructor();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException(cls.toString() + " must has default constructor.");
         }
         if(!cls.isAnnotationPresent(Sheet.class)){
-            //TODO:proper exception type
-            throw new IllegalArgumentException("cls must indicate sheet'name by using " + Sheet.class.toString());
+            //FIXME:proper exception type
+            throw new IllegalArgumentException(cls.toString() + " must indicate sheet'name by using " + Sheet.class.toString());
         }
+
+        //interprete class
         this.cls = cls;
         Sheet annotationSheet = cls.getAnnotation(Sheet.class);
         sheetName = annotationSheet.name();
@@ -37,8 +47,8 @@ class RowMapper<E> {
             cellMappers.add(new CellMapper(colIndex++, field));
         }
         if(cellMappers.isEmpty()) {
-            //TODO:proper exception type
-            throw new IllegalArgumentException("cls contains no such field which is annotated by " + Column.class.toString());
+            //FIXME:proper exception type
+            throw new IllegalArgumentException(cls.toString() + " contains no such field which is annotated by " + Column.class.toString());
         }
     }
 
@@ -50,7 +60,22 @@ class RowMapper<E> {
     }
 
     E getDataFromRow(Row row) {
-        return null;
+        E obj = createObject();
+        for(CellMapper cellMapper : cellMappers) {
+            Cell cell = row.getCell(cellMapper.index);
+            cellMapper.setCellToData(cell, obj);
+        }
+        return obj;
+    }
+
+    private E createObject() {
+        try {
+            Constructor<E> defaultConstructor = cls.getConstructor();
+            return defaultConstructor.newInstance();
+        } catch (Exception e) {
+            //FIXME: proper exception
+            throw new RuntimeException("internal error:" +e.getMessage());
+        }
     }
 
     class CellMapper {
@@ -64,17 +89,7 @@ class RowMapper<E> {
         }
 
         void setDataToCell(Object data, Cell cell) {
-            //Lets boxing the primitive value to Object
-            Object value = null;
-            try {
-                value = field.get(data);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            if(value == null) {
-                //TODO: proper error
-                throw new RuntimeException("Can't getValue from data obj");
-            }
+            final Object value = get(data);
             switch (cellType) {
                 case NUMERIC:
                     cell.setCellValue(((Number)value).doubleValue());
@@ -87,6 +102,43 @@ class RowMapper<E> {
                     break;
                 default:
                     break;
+            }
+        }
+
+        void setCellToData(Cell cell, Object data) {
+            switch (cellType) {
+                case NUMERIC:
+                    set(data, MapperUtils.castNumericValue(field.getType(), cell.getNumericCellValue()));
+                    break;
+                case STRING:
+                    set(data, cell.getStringCellValue());
+                    break;
+                case BOOLEAN:
+                    set(data, cell.getBooleanCellValue());
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        Object get(Object data) {
+            //Lets boxing the primitive value to Object
+            Object value = null;
+            try {
+                value = field.get(data);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+                //FIXME:Throw Exception
+            }
+            return value;
+        }
+
+        void set(Object data, Object value) {
+            try {
+                field.set(data, value);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+                //FIXME:Throw Exception
             }
         }
     }

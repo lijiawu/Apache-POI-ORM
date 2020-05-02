@@ -95,6 +95,11 @@ public class NewSheet<E>{
         rowMapper.setDataToRow(data, row);
     }
 
+    public E fakeGet(int rowNum) {
+        Row row = sheet.getRow(rowNum);
+        return rowMapper.getDataFromRow(row);
+    }
+
     public void testPerson() {
         Field[] fields = genericType.getDeclaredFields();
         for(Field field : fields) {

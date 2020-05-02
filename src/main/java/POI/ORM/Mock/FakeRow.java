@@ -2,9 +2,21 @@ package POI.ORM.Mock;
 
 import org.apache.poi.ss.usermodel.*;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class FakeRow implements Row {
+
+    private List<Cell> cells;
+
+    public FakeRow() {
+        cells = new ArrayList<>();
+        cells.add(new FakeCell(CellType.STRING));
+        cells.add(new FakeCell(CellType.NUMERIC));
+        cells.add(new FakeCell(CellType.BOOLEAN));
+    }
+
     @Override
     public Cell createCell(int column) {
         return null;
@@ -32,7 +44,7 @@ public class FakeRow implements Row {
 
     @Override
     public Cell getCell(int cellnum) {
-        return null;
+        return cells.get(cellnum);
     }
 
     @Override

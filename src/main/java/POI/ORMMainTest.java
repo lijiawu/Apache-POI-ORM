@@ -9,5 +9,6 @@ public class ORMMainTest {
         NewSheet<Person> sheet = new NewSheet<>(Person.class);
 //        sheet.testPerson();
         sheet.fakeAdd(new Person("Jiawu", 22, false));
+        Person person = sheet.fakeGet(0);
     }
 }

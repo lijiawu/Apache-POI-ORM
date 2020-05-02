@@ -10,6 +10,14 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class FakeCell implements Cell {
+    private CellType cellType;
+
+    public FakeCell() {}
+
+    public FakeCell(CellType cellType) {
+        this.cellType = cellType;
+    }
+
     @Override
     public int getColumnIndex() {
         return 0;
@@ -32,7 +40,7 @@ public class FakeCell implements Cell {
 
     @Override
     public void setCellType(CellType cellType) {
-
+        this.cellType = cellType;
     }
 
     @Override
@@ -42,7 +50,7 @@ public class FakeCell implements Cell {
 
     @Override
     public CellType getCellType() {
-        return null;
+        return cellType;
     }
 
     @Override
@@ -132,7 +140,6 @@ public class FakeCell implements Cell {
 
     @Override
     public void setCellValue(boolean value) {
-
     }
 
     @Override

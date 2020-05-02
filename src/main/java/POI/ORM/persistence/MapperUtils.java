@@ -22,6 +22,20 @@ class MapperUtils {
         }
     }
 
+    //FIXME: type support not complete
+    public static Object castNumericValue(Class<?> type, Number value) {
+        if(int.class == type || Integer.class == type) {
+            return value.intValue();
+        }
+        if(long.class == type || Long.class == type) {
+            return value.longValue();
+        }
+        if(double.class == type || Double.class == type) {
+            return value.doubleValue();
+        }
+        return value;
+    }
+
     private static boolean isNumberType(Class<?> type) {
         return Number.class.isAssignableFrom(type) ||
                 int.class == type ||
