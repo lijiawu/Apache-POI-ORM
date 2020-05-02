@@ -92,12 +92,12 @@ public class NewSheet<E>{
     public void fakeAdd(E data) {
         final int lastRowNum = sheet.getLastRowNum();
         Row row = sheet.createRow(lastRowNum + 1);
-        rowMapper.setDataToRow(data, row);
+        rowMapper.setEntityToRow(data, row);
     }
 
     public E fakeGet(int rowNum) {
         Row row = sheet.getRow(rowNum);
-        return rowMapper.getDataFromRow(row);
+        return rowMapper.getEntityFromRow(row);
     }
 
     public void testPerson() {

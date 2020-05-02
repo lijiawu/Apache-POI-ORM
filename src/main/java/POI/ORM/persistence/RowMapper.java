@@ -52,14 +52,14 @@ class RowMapper<E> {
         }
     }
 
-    void setDataToRow(E data, Row row) {
+    void setEntityToRow(E entity, Row row) {
         for(CellMapper cellMapper : cellMappers) {
             Cell cell = row.createCell(cellMapper.index, cellMapper.cellType);
-            cellMapper.setDataToCell(data, cell);
+            cellMapper.setDataToCell(entity, cell);
         }
     }
 
-    E getDataFromRow(Row row) {
+    E getEntityFromRow(Row row) {
         E obj = createObject();
         for(CellMapper cellMapper : cellMappers) {
             Cell cell = row.getCell(cellMapper.index);
