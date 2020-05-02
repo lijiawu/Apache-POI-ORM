@@ -1,7 +1,7 @@
 package POI;
 
 import POI.datamodel.Person;
-import POI.ORM.NewSheet;
+import POI.ORM.persistence.NewSheet;
 import POI.ORM.NewXlsx;
 import POI.ORM.Xlsx;
 import org.apache.poi.ss.usermodel.*;

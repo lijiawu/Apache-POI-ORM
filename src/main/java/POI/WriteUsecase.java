@@ -1,6 +1,6 @@
 package POI;
 
-import POI.ORM.NewSheet;
+import POI.ORM.persistence.NewSheet;
 import POI.ORM.NewXlsx;
 import POI.ORM.Xlsx;
 import POI.datamodel.Person;

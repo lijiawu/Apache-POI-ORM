@@ -1,8 +1,11 @@
-package POI.ORM;
+package POI.ORM.persistence;
 
+import POI.ORM.Mock.FakeSheet;
+import POI.ORM.Range;
+import POI.ORM.persistence.annotation.Column;
 import POI.datamodel.Person;
+import org.apache.poi.ss.usermodel.Row;
 
-import javax.swing.plaf.synth.Region;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -14,7 +17,14 @@ import java.util.List;
 public class NewSheet<E>{
     private Class<E> genericType;
 
+    private RowMapper<E> rowMapper;
+
+    private FakeSheet sheet;
+
     public NewSheet(Class<E> type) {
+        genericType = type;
+        rowMapper = new RowMapper<>(type);
+        sheet = new FakeSheet();
     }
 
     /**
@@ -23,18 +33,20 @@ public class NewSheet<E>{
      * @return
      */
     public List<E> get(int num) {
-
+        return null;
     }
 
     /**
      * B1(lefttop):C2(rightBottom)
      * @return
      */
-    public List<E> get(Range) {
-
+    public List<E> get(Range range) {
+        return null;
     }
 
-    public List<E> getAll() {}
+    public List<E> getAll() {
+        return null;
+    }
 
     /**
      * a row
@@ -54,14 +66,13 @@ public class NewSheet<E>{
     }
 
     public void remove(int numRow) {
-        
-    }
-
-    public void removeAll(Range) {
 
     }
 
+    public void removeAll(Range range) {
 
+    }
+    
     /**
      * TODO:Pending to the last
      * shift + create
@@ -72,12 +83,29 @@ public class NewSheet<E>{
 
 
 
-    //=====
+    //==============================
+
+    public void testCreateSheet(Class<E> type) {
+
+    }
+
+    public void fakeAdd(E data) {
+        final int lastRowNum = sheet.getLastRowNum();
+        Row row = sheet.createRow(lastRowNum + 1);
+        rowMapper.setDataToRow(data, row);
+    }
+
+    public void testPerson() {
+        Field[] fields = genericType.getDeclaredFields();
+        for(Field field : fields) {
+            System.out.println(field.toString() + "#type:" + field.getType().toString() + "#has Column Anno:" + field.isAnnotationPresent(Column.class));
+        }
+    }
 
     public void add(E obj, E ...objs) {}
-    public List<E> getAll() {
+    public List<E> test() {
         List<String> i = new ArrayList<>();
-        NewSheet<Person> p = new NewSheet<>();
+        NewSheet<Person> p = new NewSheet<>(Person.class);
         Type itype = p.getClass().getGenericSuperclass();
 
         System.out.println(itype instanceof ParameterizedType);

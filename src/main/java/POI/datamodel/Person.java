@@ -1,7 +1,7 @@
 package POI.datamodel;
 
-import POI.annotation.Column;
-import POI.annotation.Sheet;
+import POI.ORM.persistence.annotation.Column;
+import POI.ORM.persistence.annotation.Sheet;
 
 @Sheet(name = "Contact")
 public class Person {
@@ -12,6 +12,8 @@ public class Person {
     Object extra;
     @Column
     private boolean gender;
+
+    public Person() {}
 
     public Person(final String name, final int age, final boolean gender) {
         this.name = name;
