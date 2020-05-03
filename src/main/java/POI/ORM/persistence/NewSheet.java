@@ -14,6 +14,7 @@ import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO:
 public class NewSheet<E>{
     private Class<E> genericType;
 
@@ -27,24 +28,35 @@ public class NewSheet<E>{
         sheet = new FakeSheet();
     }
 
+    public E getModel(int start) {
+        return null;
+    }
     /**
      * a row
      * TODO:pending
      * @return
      */
-    public List<E> get(int num) {
+    public List<E> getModelFrom(int start) {
         return null;
+    }
+
+    public List<E> getModelRange(start, end) {
+
+    }
+
+    public void writeModelTile(Class<?> cls, int rownum) {
+        append
     }
 
     /**
      * B1(lefttop):C2(rightBottom)
      * @return
      */
-    public List<E> get(Range range) {
+    public List<E> getModel(Range range) {
         return null;
     }
 
-    public List<E> getAll() {
+    public List<E> getModelAll() {
         return null;
     }
 
@@ -53,35 +65,17 @@ public class NewSheet<E>{
      * TODO:pending
      * @return
      */
-    public void add(E data) {
+    public void addModel(E data) {
 
     }
 
-    public void addAll(List<E> data) {
+    public void addModelAll(List<E> data) {
 
     }
 
-    public void addAll(List<E> data, int numRow) {
+    public void addModelAll(List<E> data, int numRow) {
 
     }
-
-    public void remove(int numRow) {
-
-    }
-
-    public void removeAll(Range range) {
-
-    }
-    
-    /**
-     * TODO:Pending to the last
-     * shift + create
-     */
-    public void insert() {
-
-    }
-
-
 
     //==============================
 

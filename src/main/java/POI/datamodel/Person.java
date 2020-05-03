@@ -5,7 +5,7 @@ import POI.ORM.persistence.annotation.Sheet;
 
 @Sheet(name = "Contact")
 public class Person {
-    @Column
+    @Column(name)
     private String name;
     @Column
     private int age;

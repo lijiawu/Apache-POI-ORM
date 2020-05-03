@@ -27,6 +27,7 @@ class MapperUtils {
         if(int.class == type || Integer.class == type) {
             return value.intValue();
         }
+        //TODO:FLOAT
         if(long.class == type || Long.class == type) {
             return value.longValue();
         }

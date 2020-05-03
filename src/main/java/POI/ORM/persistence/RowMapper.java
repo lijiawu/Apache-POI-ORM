@@ -11,7 +11,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-class RowMapper<E> {
+final class RowMapper<E> {
     private Class<E> cls;
     private String sheetName;
     List<CellMapper> cellMappers;
