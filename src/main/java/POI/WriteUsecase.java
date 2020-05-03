@@ -1,5 +1,6 @@
 package POI;
 
+import POI.ORM.Range;
 import POI.ORM.persistence.NewSheet;
 import POI.ORM.NewXlsx;
 import POI.ORM.Xlsx;
@@ -9,6 +10,8 @@ import org.apache.poi.ss.usermodel.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.LinkedList;
+import java.util.List;
 
 public class WriteUsecase {
     public static void main(String[] args) throws IOException {
@@ -40,5 +43,18 @@ public class WriteUsecase {
         Person Lina = new Person("Lina", 26, true);
         contactSheet.add(John);
         contactSheet.add(Lina);
+
+        List<Person> people = new LinkedList<>();
+        people.add(John);
+        people.add(Lina);
+
+        // addAll
+        contactSheet.addAll(people);
+
+        contactSheet.addAll(people, 2);
+
+        contactSheet.remove(4);   // scope, behavior
+
+        contactSheet.removeAll(new Range(1, 3));
     }
 }

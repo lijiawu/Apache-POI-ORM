@@ -1,5 +1,6 @@
 package POI;
 
+import POI.ORM.Range;
 import POI.datamodel.Person;
 import POI.ORM.persistence.NewSheet;
 import POI.ORM.NewXlsx;
@@ -48,9 +49,29 @@ public class ExcelOperationTest {
         //Our new ORM Version
         NewXlsx xlsx = Xlsx.load(excelFilePath);
         NewSheet<Person> personSheet = xlsx.getSheet(Person.class);
+
+        // Getall
         List<Person> people = personSheet.getAll();
         for(Person person : people) {
             System.out.println("name:" + person.name() + " age:" + person.age() + " gender:" + person.gender());
         }
+
+        // Get By Range
+        // 1. Range as in row & col range
+        // (a) User already know the person param count
+        people = personSheet.get(new Range("B2", "E6"));
+
+        // (b) User don't know person param count
+        int startRow = 2, endRow = 6;
+        int startCol = 2, endCol = startCol + Person.class.getFields().length;
+        String start = Character.toString('A' + startCol - 1) + Integer.toString(startRow);
+        String end = Character.toString('A' + endCol - 1) + Integer.toString(endRow);
+        people = personSheet.get(new Range(start, end));
+
+        // (c) Range presented by numbers
+        people = personSheet.get(new Range(startRow, startCol, endRow, endCol));
+
+        // 2. Range as in row range
+        people = personSheet.get(new Range(2, 6)); // set start col elsewhere???
     }
 }
