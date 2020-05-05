@@ -1,17 +1,6 @@
 package POI;
 
-import POI.ORM.Range;
-import POI.datamodel.Person;
-import POI.ORM.persistence.NewSheet;
-import POI.ORM.NewXlsx;
-import POI.ORM.Xlsx;
-import org.apache.poi.ss.usermodel.*;
-
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
 
 public class ExcelOperationTest {
     public static void main(String[] args) throws IOException {

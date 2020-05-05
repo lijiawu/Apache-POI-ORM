@@ -1,9 +1,5 @@
 package POI;
 
-import POI.ORM.Range;
-import POI.ORM.persistence.NewSheet;
-import POI.ORM.NewXlsx;
-import POI.ORM.Xlsx;
 import POI.datamodel.Person;
 import org.apache.poi.ss.usermodel.*;
 
@@ -37,12 +33,11 @@ public class WriteUsecase {
         }
 
         //Our ORM version
-        NewXlsx xlsx = Xlsx.create("workbook.xls");
-        NewSheet<Person> contactSheet = xlsx.createSheet(Person.class);
+        POI.ORM.persistence.Sheet contactSheet = new POI.ORM.persistence.Sheet();
         Person John = new Person("John", 22, false);
         Person Lina = new Person("Lina", 26, true);
-        contactSheet.add(John);
-        contactSheet.add(Lina);
+        contactSheet.addModel(John);
+        contactSheet.addModel(Lina);
 
         List<Person> people = new LinkedList<>();
         people.add(John);
