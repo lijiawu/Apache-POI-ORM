@@ -11,11 +11,11 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-final class RowMapper<E> {
+public final class RowMapper<E> {
     private Class<E> cls;
     private String sheetName;
     List<CellMapper> cellMappers;
-    RowMapper(Class<E> cls) {
+    public RowMapper(Class<E> cls) {
         //precondition check
         if(null == cls) {
             throw new IllegalArgumentException("Parameter can't be null.");
@@ -59,6 +59,13 @@ final class RowMapper<E> {
         }
     }
 
+    void setModelTitleToRow(E model, Row row) {
+        for(CellMapper cellMapper : cellMappers) {
+            Cell cell = row.createCell(cellMapper.index, CellType.STRING);
+            cell.setCellValue(cellMapper.columName);
+        }
+    }
+
     E getModelFromRow(Row row) {
         E obj = createObject();
         for(CellMapper cellMapper : cellMappers) {
@@ -82,10 +89,12 @@ final class RowMapper<E> {
         Field field;
         int index;
         CellType cellType;
+        String columName;
         CellMapper(int index, Field field) {
             this.index = index;
             this.field = field;
             cellType = MapperUtils.getCellType(field);
+            columName = getColumName(field);
         }
 
         void setModelToCell(Object data, Cell cell) {
@@ -140,6 +149,14 @@ final class RowMapper<E> {
                 e.printStackTrace();
                 //FIXME:Throw Exception
             }
+        }
+
+        String getColumName(Field field) {
+            String columName = field.getAnnotation(Column.class).name();
+            if(columName.isEmpty()) {
+                columName = field.getName();
+            }
+            return columName;
         }
     }
 }

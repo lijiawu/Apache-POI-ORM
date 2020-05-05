@@ -23,12 +23,13 @@ public class Sheet{
         return null;
     }
 
-    public void writeModelTile(int rowNum, Class<?> cls) {
+    public void addModelTile(int rowNum, Class<?> cls) {
 
     }
 
     public <T> void addModel(T data) {
-
+        Class<T> cls = (Class<T>) data.getClass();
+        RowMapper<T> mapper = new RowMapper<>(cls);
     }
 
     public <T> void addModelAll(List<T> data) {
