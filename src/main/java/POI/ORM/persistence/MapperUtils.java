@@ -22,16 +22,17 @@ class MapperUtils {
         }
     }
 
-    //FIXME: type support not complete
     public static Object castNumericValue(Class<?> type, Number value) {
-        if(int.class == type || Integer.class == type) {
+        if (int.class == type || Integer.class == type) {
             return value.intValue();
         }
-        //TODO:FLOAT
-        if(long.class == type || Long.class == type) {
+        if (float.class == type || Float.class == type) {
+            return value.floatValue();
+        }
+        if (long.class == type || Long.class == type) {
             return value.longValue();
         }
-        if(double.class == type || Double.class == type) {
+        if (double.class == type || Double.class == type) {
             return value.doubleValue();
         }
         return value;

@@ -40,12 +40,12 @@ public class NewSheet<E>{
         return null;
     }
 
-    public List<E> getModelRange(start, end) {
-
+    public List<E> getModelRange(int start, int end) {
+        return null;
     }
 
     public void writeModelTile(Class<?> cls, int rownum) {
-        append
+
     }
 
     /**
@@ -79,6 +79,23 @@ public class NewSheet<E>{
 
     //==============================
 
+    public <T> T getModelT(int rowNum, Class<T> modelCls) {
+        RowMapper<T> mapper = new RowMapper<>(modelCls);
+        Row row = sheet.getRow(rowNum);
+        return mapper.getModelFromRow(row);
+    }
+
+    public <T> List<T> getModelT(int startRowNum, int endRowNum, Class<T> modelCls) {
+        //TODO:CHECK startRowNum <= endRowNum
+        RowMapper<T> mapper = new RowMapper<>(modelCls);
+        List<T> models = new ArrayList<>();
+        for(int i = startRowNum; i < endRowNum; ++i) {
+            Row row = sheet.getRow(i);
+            models.add(mapper.getModelFromRow(row));
+        }
+        return models;
+    }
+
     public void testCreateSheet(Class<E> type) {
 
     }
@@ -86,12 +103,12 @@ public class NewSheet<E>{
     public void fakeAdd(E data) {
         final int lastRowNum = sheet.getLastRowNum();
         Row row = sheet.createRow(lastRowNum + 1);
-        rowMapper.setEntityToRow(data, row);
+        rowMapper.setModelToRow(data, row);
     }
 
     public E fakeGet(int rowNum) {
         Row row = sheet.getRow(rowNum);
-        return rowMapper.getEntityFromRow(row);
+        return rowMapper.getModelFromRow(row);
     }
 
     public void testPerson() {

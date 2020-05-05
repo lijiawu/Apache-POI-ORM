@@ -49,12 +49,12 @@ public class WriteUsecase {
         people.add(Lina);
 
         // addAll
-        contactSheet.addAll(people);
-
-        contactSheet.addAll(people, 2);
-
-        contactSheet.remove(4);   // scope, behavior
-
-        contactSheet.removeAll(new Range(1, 3));
+//        contactSheet.addAll(people);
+//
+//        contactSheet.addAll(people, 2);
+//
+//        contactSheet.remove(4);   // scope, behavior
+//
+//        contactSheet.removeAll(new Range(1, 3));
     }
 }

@@ -52,18 +52,18 @@ final class RowMapper<E> {
         }
     }
 
-    void setEntityToRow(E entity, Row row) {
+    void setModelToRow(E model, Row row) {
         for(CellMapper cellMapper : cellMappers) {
             Cell cell = row.createCell(cellMapper.index, cellMapper.cellType);
-            cellMapper.setDataToCell(entity, cell);
+            cellMapper.setModelToCell(model, cell);
         }
     }
 
-    E getEntityFromRow(Row row) {
+    E getModelFromRow(Row row) {
         E obj = createObject();
         for(CellMapper cellMapper : cellMappers) {
             Cell cell = row.getCell(cellMapper.index);
-            cellMapper.setCellToData(cell, obj);
+            cellMapper.setCellToModel(cell, obj);
         }
         return obj;
     }
@@ -78,7 +78,7 @@ final class RowMapper<E> {
         }
     }
 
-    class CellMapper {
+    private class CellMapper {
         Field field;
         int index;
         CellType cellType;
@@ -88,7 +88,7 @@ final class RowMapper<E> {
             cellType = MapperUtils.getCellType(field);
         }
 
-        void setDataToCell(Object data, Cell cell) {
+        void setModelToCell(Object data, Cell cell) {
             final Object value = get(data);
             switch (cellType) {
                 case NUMERIC:
@@ -105,7 +105,7 @@ final class RowMapper<E> {
             }
         }
 
-        void setCellToData(Cell cell, Object data) {
+        void setCellToModel(Cell cell, Object data) {
             switch (cellType) {
                 case NUMERIC:
                     set(data, MapperUtils.castNumericValue(field.getType(), cell.getNumericCellValue()));
